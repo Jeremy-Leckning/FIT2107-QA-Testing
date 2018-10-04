@@ -21,7 +21,8 @@ class Scheduler:
 
 
     def find_time(self, satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-    start_time=datetime.now(), n_windows=24, duration=60, sample_interval=1, cumulative=False):
+    start_time=datetime.now(), n_windows=24, duration=60, sample_interval=1, cumulative=False,
+    location=(-37.910496,145.134021)):
         '''NOTE: this is the key function that you'll need to implement for the assignment.  Please
         don't change the arguments.
         arguments: satlist_url (string) a URL to a file containing a list of Earth-orbiting
@@ -36,7 +37,10 @@ class Scheduler:
                       cumulative: a boolean to determine whether we look for the maximum number
                       of satellites visible at any time within the duration (if False), or the
                       cumulative number of distinct satellites visible over the duration (if True)
-
+                      location: a tuple (lat, lon) of floats specifying he latitude and longitude of the
+                      observer.  Negative latitudes specify the southern hemisphere, negative longitudes
+                      the western hemisphere.  lat must be in the range [-90,90], lon must be in the
+                      range [-180, 180]
         returns:a tuple ( interval_start_time, satellite_list), where start_interval is
         the time interval from the set {(start_time, start_time + duration),
         (start_time + duration, start_time + 2*duration)...} with the most satellites visible at some
