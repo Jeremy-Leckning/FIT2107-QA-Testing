@@ -3,12 +3,13 @@ Initial skeleton code written by Robert Merkel for FIT2107 Assignment 3
 '''
 
 from skyfield.api import Loader
-import datetime, time
+from skyfield.api import Topos, load
+import pytz,datetime, time
 from datetime import datetime
 
 class IllegalArgumentException(Exception):
     '''An exception to throw if somebody provides invalid data to the Scheduler methods'''
-    pass
+    print("There is an error with the arguments")
 
 class Scheduler:
     '''The class for calculating optimal satellite spotting times.  You can and should add methods
@@ -47,4 +48,39 @@ class Scheduler:
         point in the interval, or the most cumulative satellites visible over the interval (if cumulative=True)
         See the assignment spec sheet for more details.
         raises: IllegalArgumentException if an illegal argument is provided'''
+        print(start_time)
+        #Loading list of satellites
+        satellites = load.tle(satlist_url)
+
+        #Getting current time
+        self.t = self.ts.now()
+        print(self.t.utc_jpl())
+
+        #Iterating over list of satellites to determine if they are over or below the horizon
+        for i in satellites:
+            if isinstance(i, str):
+                continue
+
+
+            print(i)
+
+            satellite = satellites[i]
+            bluffton = Topos(location[0], location[1])
+            difference = satellite - bluffton
+            topocentric = difference.at(self.t)
+
+            alt, az, distance = topocentric.altaz()
+
+            resultString=""
+            resultString = str(satellites[i])
+            if alt.degrees > 0:
+                resultString+=" is above the horizon"
+                print(resultString)
+            else:
+                resultString+=" is not above the horizon"
+                print(resultString)
+            # print(alt)
+            # print(az)
+            # print(distance.km)
+
         return (start_time, ["ISS (ZARYA)", "COSMOS-123"])
