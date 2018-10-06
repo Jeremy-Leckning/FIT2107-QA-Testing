@@ -7,9 +7,15 @@ from skyfield.api import Topos, load
 import pytz,datetime, time
 from datetime import datetime
 
+
 class IllegalArgumentException(Exception):
     '''An exception to throw if somebody provides invalid data to the Scheduler methods'''
-    print("There is an error with the arguments")
+    def __init__(self):
+        pass
+
+    def __str__(self):
+        print("There is an error with the arguments")
+
 
 class Scheduler:
     '''The class for calculating optimal satellite spotting times.  You can and should add methods
@@ -19,7 +25,6 @@ class Scheduler:
         to this if you want.  '''
         self._skyload = Loader('~/.skyfield-data')
         self.ts = self._skyload.timescale()
-
 
     def find_time(self, satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
     start_time=datetime.now(), n_windows=24, duration=60, sample_interval=1, cumulative=False,
@@ -48,6 +53,24 @@ class Scheduler:
         point in the interval, or the most cumulative satellites visible over the interval (if cumulative=True)
         See the assignment spec sheet for more details.
         raises: IllegalArgumentException if an illegal argument is provided'''
+
+        # Handling illegal arguments
+        if duration <= 0:
+            raise IllegalArgumentException()
+        if not isinstance(n_windows, int) or n_windows < 0:
+            raise IllegalArgumentException()
+        if sample_interval >= duration:
+            raise IllegalArgumentException()
+        if not isinstance(cumulative, bool):
+            raise IllegalArgumentException()
+        if not isinstance(location, tuple):
+            raise IllegalArgumentException()
+        if location[0] < -90 or location[0] > 90:
+            raise IllegalArgumentException()
+        if location[1] < -180 or location[1] > 180:
+            raise IllegalArgumentException()
+
+
         print(start_time)
         #Loading list of satellites
         satellites = load.tle(satlist_url)
