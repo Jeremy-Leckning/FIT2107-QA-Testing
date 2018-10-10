@@ -154,4 +154,26 @@ class Scheduler:
     location=(-37.910496,145.134021)):
         """calculates the total number of distinct satellites for a given time interval"""
         satellites = load.tle(satlist_url)
-        pass
+
+        List = []
+        UTC_ZONE = timezone('UTC')
+        for j in range(0, duration, sample_interval):
+            # Getting time we want to calculate
+            self.t = start_time + timedelta(minutes=j)
+            e = UTC_ZONE.localize(self.t)
+            self.t = self.ts.utc(e)
+
+            for i in satellites:
+                if isinstance(i, str):
+                    continue
+
+                satellite = satellites[i]
+                bluffton = Topos(location[0], location[1])
+                difference = satellite - bluffton
+                topocentric = difference.at(self.t)
+
+                alt, az, distance = topocentric.altaz()
+
+                if alt.degrees > 0 and satellite not in List:
+                    List.append(satellite)
+        return len(List)
