@@ -95,7 +95,7 @@ class Scheduler:
 
 
         elif cumulative == True:
-            self.total(satlist_url, start_time, duration, sample_interval, location)
+            return self.total(satlist_url, start_time, duration, sample_interval, location)
 
         """
                 print(start_time)
@@ -136,7 +136,7 @@ class Scheduler:
         """
 
         self.t = 0
-        return (start_time, ["ISS (ZARYA)", "COSMOS-123"])
+        # return (start_time, ["ISS (ZARYA)", "COSMOS-123"])
 
     def peak(self):
         pass
@@ -204,14 +204,14 @@ class Scheduler:
         return len(List)
 
 
-Testing = Scheduler()
-maxTest = Testing.max(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-    start_time=datetime.now()+ timedelta(minutes = 2000), duration=60, sample_interval=1, location=(-37.910496,145.134021))
-print(maxTest[0].utc, maxTest[1])
-
-
-
-findTest = Testing.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-start_time=datetime.now(), n_windows=5, duration=60, sample_interval=1, cumulative=False,
-location=(-37.910496,145.134021))
-print(findTest[0].utc, findTest[1])
+# Testing = Scheduler()
+# maxTest = Testing.max(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+#     start_time=datetime.now()+ timedelta(minutes = 2000), duration=60, sample_interval=1, location=(-37.910496,145.134021))
+# print(maxTest[0].utc, maxTest[1])
+#
+#
+#
+# findTest = Testing.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+# start_time=datetime.now(), n_windows=5, duration=60, sample_interval=1, cumulative=False,
+# location=(-37.910496,145.134021))
+# print(findTest[0].utc, findTest[1])
