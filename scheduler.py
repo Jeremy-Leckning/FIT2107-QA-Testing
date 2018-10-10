@@ -4,9 +4,13 @@ Initial skeleton code written by Robert Merkel for FIT2107 Assignment 3
 
 from skyfield.api import Loader
 from skyfield.api import Topos, load
+
 #import pytz,datetime, time
 from datetime import datetime, timedelta
 from pytz import timezone
+# import pytz,datetime, time
+from datetime import datetime
+
 
 
 class IllegalArgumentException(Exception):
@@ -26,6 +30,13 @@ class Scheduler:
         to this if you want.  '''
         self._skyload = Loader('~/.skyfield-data')
         self.ts = self._skyload.timescale()
+
+    def prompt(self):
+        n_windows = input("?")
+        duration = input("?")
+        sampleInterval = input("?")
+        cumulative = input("?")
+        return (n_windows, duration, sampleInterval, cumulative)
 
     def find_time(self, satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
     start_time=datetime.now(), n_windows=24, duration=60, sample_interval=1, cumulative=False,
@@ -83,6 +94,7 @@ class Scheduler:
         print(self.t.utc_jpl())
 
         #Iterating over list of satellites to determine if they are over or below the horizon
+        print(satellites)
         for i in satellites:
             if isinstance(i, str):
                 continue
@@ -111,15 +123,11 @@ class Scheduler:
 
         return (start_time, ["ISS (ZARYA)", "COSMOS-123"])
 
-    def prompt(self):
-        pass
-
     def peak(self):
         pass
 
     def max(self, satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-    start_time=datetime.now(), n_windows=24, duration=60, sample_interval=1, cumulative=False,
-    location=(-37.910496,145.134021)):
+    start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021)):
         """calculates the maximum number of satellites visible at a single moment within an interval of time"""
         #Loading list of satellites
         satellites = load.tle(satlist_url)
@@ -150,7 +158,7 @@ class Scheduler:
         return max(List, key = lambda item:item[1])
 
     def total(self, satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-    start_time=datetime.now(), n_windows=24, duration=60, sample_interval=1, cumulative=False,
+    start_time=datetime.now(),duration=60, sample_interval=1,
     location=(-37.910496,145.134021)):
         """calculates the total number of distinct satellites for a given time interval"""
         satellites = load.tle(satlist_url)
