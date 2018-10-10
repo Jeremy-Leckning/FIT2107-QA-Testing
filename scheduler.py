@@ -4,8 +4,9 @@ Initial skeleton code written by Robert Merkel for FIT2107 Assignment 3
 
 from skyfield.api import Loader
 from skyfield.api import Topos, load
-import pytz,datetime, time
-from datetime import datetime
+#import pytz,datetime, time
+from datetime import datetime, timedelta
+from pytz import timezone
 
 
 class IllegalArgumentException(Exception):
@@ -55,6 +56,8 @@ class Scheduler:
         raises: IllegalArgumentException if an illegal argument is provided'''
 
         # Handling illegal arguments
+        if type(start_time) is not type(datetime.now()):
+            raise IllegalArgumentException()
         if duration <= 0:
             raise IllegalArgumentException()
         if not isinstance(n_windows, int) or n_windows < 0:
@@ -107,3 +110,48 @@ class Scheduler:
             # print(distance.km)
 
         return (start_time, ["ISS (ZARYA)", "COSMOS-123"])
+
+    def prompt(self):
+        pass
+
+    def peak(self):
+        pass
+
+    def max(self, satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+    start_time=datetime.now(), n_windows=24, duration=60, sample_interval=1, cumulative=False,
+    location=(-37.910496,145.134021)):
+        """calculates the maximum number of satellites visible at a single moment within an interval of time"""
+        #Loading list of satellites
+        satellites = load.tle(satlist_url)
+
+        List = []
+        UTC_ZONE = timezone('UTC')
+        for j in range(0, duration, sample_interval):
+            count = 0  # Resetting count after each iteration
+            # Getting time we want to calculate
+            self.t = start_time + timedelta(minutes = j)
+            e = UTC_ZONE.localize(self.t)
+            self.t = self.ts.utc(e)
+
+            for i in satellites:
+                if isinstance(i, str):
+                    continue
+
+                satellite = satellites[i]
+                bluffton = Topos(location[0], location[1])
+                difference = satellite - bluffton
+                topocentric = difference.at(self.t)
+
+                alt, az, distance = topocentric.altaz()
+
+                if alt.degrees > 0:
+                    count += 1
+            List.append((self.t,count))
+        return max(List, key = lambda item:item[1])
+
+    def total(self, satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+    start_time=datetime.now(), n_windows=24, duration=60, sample_interval=1, cumulative=False,
+    location=(-37.910496,145.134021)):
+        """calculates the total number of distinct satellites for a given time interval"""
+        satellites = load.tle(satlist_url)
+        pass
