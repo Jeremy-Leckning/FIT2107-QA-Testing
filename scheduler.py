@@ -30,6 +30,7 @@ class Scheduler:
         to this if you want.  '''
         self._skyload = Loader('~/.skyfield-data')
         self.ts = self._skyload.timescale()
+        self.t = 0
 
     def prompt(self):
         n_windows = input("?")
@@ -84,8 +85,20 @@ class Scheduler:
         if location[1] < -180 or location[1] > 180:
             raise IllegalArgumentException()
 
+        Result = []
+        if cumulative == False:
+            for window in range(n_windows):
+                self.t = start_time + timedelta(minutes=duration*window)
+                temp = self.max(satlist_url, self.t, duration, sample_interval, location)
+                Result.append(temp)
+            return max(Result, key=lambda item: item[1])
 
-        print(start_time)
+
+        elif cumulative == True:
+            self.total(satlist_url, start_time, duration, sample_interval, location)
+
+        """
+                print(start_time)
         #Loading list of satellites
         satellites = load.tle(satlist_url)
 
@@ -120,7 +133,9 @@ class Scheduler:
             # print(alt)
             # print(az)
             # print(distance.km)
+        """
 
+        self.t = 0
         return (start_time, ["ISS (ZARYA)", "COSMOS-123"])
 
     def peak(self):
@@ -155,6 +170,7 @@ class Scheduler:
                 if alt.degrees > 0:
                     count += 1
             List.append((self.t,count))
+        self.t = 0
         return max(List, key = lambda item:item[1])
 
     def total(self, satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
@@ -184,4 +200,18 @@ class Scheduler:
 
                 if alt.degrees > 0 and satellite not in List:
                     List.append(satellite)
+        self.t = 0
         return len(List)
+
+
+Testing = Scheduler()
+maxTest = Testing.max(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+    start_time=datetime.now()+ timedelta(minutes = 2000), duration=60, sample_interval=1, location=(-37.910496,145.134021))
+print(maxTest[0].utc, maxTest[1])
+
+
+
+findTest = Testing.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+start_time=datetime.now(), n_windows=5, duration=60, sample_interval=1, cumulative=False,
+location=(-37.910496,145.134021))
+print(findTest[0].utc, findTest[1])
