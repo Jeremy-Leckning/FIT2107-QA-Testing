@@ -85,13 +85,23 @@ class Scheduler:
         if location[1] < -180 or location[1] > 180:
             raise IllegalArgumentException()
 
+        maxCountList = []
         Result = []
         if cumulative == False:
             for window in range(n_windows):
+                if window == 0:
+                    old_time = start_time
+                else:
+                    old_time = self.t
+
                 self.t = start_time + timedelta(minutes=duration*window)
+                next_time = self.t + timedelta(minutes = duration * (window+1))
                 temp = self.max(satlist_url, self.t, duration, sample_interval, location)
-                Result.append(temp)
-            return max(Result, key=lambda item: item[1])
+                maxCountList.append(temp[1]) # adding count only
+                max_value = max(maxCountList)
+                max_index = maxCountList.index(max_value)
+                Result.append((old_time, next_time))
+            return Result[max_index]
 
 
         elif cumulative == True:
@@ -204,14 +214,14 @@ class Scheduler:
         return len(List)
 
 
-# Testing = Scheduler()
-# maxTest = Testing.max(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-#     start_time=datetime.now()+ timedelta(minutes = 2000), duration=60, sample_interval=1, location=(-37.910496,145.134021))
-# print(maxTest[0].utc, maxTest[1])
-#
-#
-#
-# findTest = Testing.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-# start_time=datetime.now(), n_windows=5, duration=60, sample_interval=1, cumulative=False,
-# location=(-37.910496,145.134021))
-# print(findTest[0].utc, findTest[1])
+Testing = Scheduler()
+maxTest = Testing.max(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+    start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021))
+print(maxTest[0].utc, maxTest[1])
+
+
+
+findTest = Testing.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+start_time=datetime.now(), n_windows=5, duration=60, sample_interval=1, cumulative=False,
+location=(-37.910496,145.134021))
+print(findTest)
