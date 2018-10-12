@@ -9,7 +9,6 @@ from skyfield.api import Topos, load
 from datetime import datetime, timedelta
 from pytz import timezone
 # import pytz,datetime, time
-from datetime import datetime
 
 
 
@@ -87,22 +86,20 @@ class Scheduler:
 
         maxCountList = []
         Result = []
+        stringList = []
         if cumulative == False:
             for window in range(n_windows):
-                if window == 0:
-                    old_time = start_time
-                else:
-                    old_time = self.t
-
                 self.t = start_time + timedelta(minutes=duration*window)
-                next_time = self.t + timedelta(minutes = duration * (window+1))
+                next_time = start_time + timedelta(minutes = duration * (window+1))
+                Result.append((self.t, next_time))
                 temp = self.max(satlist_url, self.t, duration, sample_interval, location)
-                maxCountList.append(temp[1]) # adding count only
-                max_value = max(maxCountList)
-                max_index = maxCountList.index(max_value)
-                Result.append((old_time, next_time))
-            return Result[max_index]
-
+                maxCountList.append(temp[1])  # adding count only
+            max_value = max(maxCountList)
+            max_index = maxCountList.index(max_value)
+            max_time_value = Result[max_index]
+            string = ""
+            string = string + max_time_value[0].strftime("%H") + ":" + max_time_value[0].strftime("%M") + "," + max_time_value[1].strftime("%H") + ":" + max_time_value[1].strftime("%M")
+            return (string, max_value)
 
         elif cumulative == True:
             return self.total(satlist_url, start_time, duration, sample_interval, location)
@@ -148,12 +145,17 @@ class Scheduler:
         self.t = 0
         # return (start_time, ["ISS (ZARYA)", "COSMOS-123"])
 
-    def peak(self):
-        pass
-
     def max(self, satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
     start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021)):
-        """calculates the maximum number of satellites visible at a single moment within an interval of time"""
+        """
+        calculates the maximum number of satellites visible at a single moment within an interval of time
+        @param satlist_url: the website where we get the list of satellites
+        @param start_time: the time where we want to start measure the number of satellites visible
+        @param duration: the duration during which we want to measure the number of satellites visible
+        @sample_interval: the intervals of time during which we will measure the number of visible satellites
+        @location: the user's location
+        @return: a tuple (time interval, max_number_of_satellites)
+        """
         #Loading list of satellites
         satellites = load.tle(satlist_url)
 
@@ -179,14 +181,24 @@ class Scheduler:
 
                 if alt.degrees > 0:
                     count += 1
-            List.append((self.t,count))
-        self.t = 0
+            end_time = start_time + timedelta(minutes = duration)
+            string = ""
+            string = string + start_time.strftime("%H") + ":" + start_time.strftime("%M") + "," + end_time.strftime("%H") + ":" + end_time.strftime("%M")
+            List.append((string,count))
         return max(List, key = lambda item:item[1])
 
     def total(self, satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
     start_time=datetime.now(),duration=60, sample_interval=1,
     location=(-37.910496,145.134021)):
-        """calculates the total number of distinct satellites for a given time interval"""
+        """
+        calculates the total number of distinct satellites for a given time interval
+        @param satlist_url: the website where we get the list of satellites
+        @param start_time: the time where we want to start measure the number of satellites visible
+        @param duration: the duration during which we want to measure the number of satellites visible
+        @sample_interval: the intervals of time during which we will measure the number of visible satellites
+        @location: the user's location
+        @return: a tuple (time interval, total number of distinct satellites)
+        """
         satellites = load.tle(satlist_url)
 
         List = []
@@ -211,14 +223,20 @@ class Scheduler:
                 if alt.degrees > 0 and satellite not in List:
                     List.append(satellite)
         self.t = 0
-        return len(List)
+        end_time = start_time + timedelta(minutes=duration)
+        string = ""
+        string = string + start_time.strftime("%H") + ":" + start_time.strftime("%M") + "," + end_time.strftime("%H") + ":" +  end_time.strftime("%M")
+        return (string,len(List))
 
 
 Testing = Scheduler()
-maxTest = Testing.max(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-    start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021))
-print(maxTest[0].utc, maxTest[1])
-
+# maxTest = Testing.max(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+#     start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021))
+# print(maxTest[0], maxTest[1])
+#
+# totalTest = Testing.total(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+#     start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021))
+# print(totalTest[0], totalTest[1])
 
 
 findTest = Testing.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
