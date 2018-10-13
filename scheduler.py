@@ -84,19 +84,22 @@ class Scheduler:
         if location[1] < -180 or location[1] > 180:
             raise IllegalArgumentException()
 
-        count_list = []
+        # Local variables
         satellite_list = []
-        Result = []
+        time_list = []
+        count_list = []
+
         if cumulative == False:  # return(time_interval, list of satellites visible during window of time)
+
             for window in range(n_windows):
                 self.t = start_time + timedelta(minutes=duration*window)
-                Result.append(self.t)
+                time_list.append(self.t)
                 temp = self.max(satlist_url, self.t, duration, sample_interval, location)
                 count_list.append(temp[1])  # adding count only
                 satellite_list.append(temp[2])
             max_value = max(count_list)
             max_index = count_list.index(max_value)
-            max_time_value = Result[max_index]
+            max_time_value = time_list[max_index]
             max_satellite_list = satellite_list[max_index]
             string = max_time_value.strftime("%H") + ":" + max_time_value.strftime("%M")
             return (string, max_value, max_satellite_list)
@@ -104,16 +107,16 @@ class Scheduler:
         elif cumulative == True:
             for window in range(n_windows):
                 self.t = start_time + timedelta(minutes=duration*window)
-                next_time = start_time + timedelta(minutes = duration * (window+1))
-                Result.append((self.t, next_time))
+                time_list.append(self.t)
                 temp = self.total(satlist_url, self.t, duration, sample_interval, location)
                 count_list.append(temp[1])  # adding count only
+                satellite_list.append(temp[2])
             max_value = max(count_list)
             max_index = count_list.index(max_value)
-            max_time_value = Result[max_index]
-            string = ""
-            string = string + max_time_value[0].strftime("%H") + ":" + max_time_value[0].strftime("%M") + "," + max_time_value[1].strftime("%H") + ":" + max_time_value[1].strftime("%M")
-            return (string, max_value)
+            max_time_value = time_list[max_index]
+            max_satellite_list = satellite_list[max_index]
+            string = max_time_value.strftime("%H") + ":" + max_time_value.strftime("%M")
+            return (string, max_value, max_satellite_list)
 
         """
                 print(start_time)
@@ -257,22 +260,25 @@ class Scheduler:
         return (string,len(satellite_list), satellite_list)
 
 
-Testing = Scheduler()
+# Testing = Scheduler()
+# print("TESTING MAX FUNCTION:")
 # maxTest = Testing.max(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
 #     start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021))
-# print(maxTest)
-
-totalTest = Testing.total(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-    start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021))
-print(totalTest)
-
+# print(maxTest, "\n")
 #
+# print("TESTING TOTAL FUNCTION:")
+# totalTest = Testing.total(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+#     start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021))
+# print(totalTest, "\n")
+#
+# print("TESTING FIND_TIME WITH CUMULATIVE = FALSE:")
 # findTest = Testing.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
 # start_time=datetime.now(), n_windows=10, duration=60, sample_interval=1, cumulative=False,
 # location=(-37.910496,145.134021))
-# print(findTest)
+# print(findTest, "\n")
 #
+# print("TESTING FIND_TIME WITH CUMULATIVE = TRUE: ")
 # findTestTrue = Testing.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-# start_time=datetime.now(), n_windows=24, duration=60, sample_interval=1, cumulative=True,
+# start_time=datetime.now(), n_windows=10, duration=60, sample_interval=1, cumulative=True,
 # location=(-37.910496,145.134021))
-# print(findTestTrue)
+# print(findTestTrue, "\n")
