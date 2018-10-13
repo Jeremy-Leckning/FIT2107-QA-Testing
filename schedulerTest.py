@@ -2,10 +2,10 @@ import unittest
 from scheduler import Scheduler
 from scheduler import IllegalArgumentException
 from datetime import datetime
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
+
+
 class SchedulerTest(unittest.TestCase):
-
-
     '''Tests for the scheduler class.  Add more tests
     to test the code that you write'''
 
