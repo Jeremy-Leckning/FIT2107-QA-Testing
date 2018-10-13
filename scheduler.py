@@ -84,25 +84,36 @@ class Scheduler:
         if location[1] < -180 or location[1] > 180:
             raise IllegalArgumentException()
 
-        maxCountList = []
+        count_list = []
+        satellite_list = []
         Result = []
-        stringList = []
-        if cumulative == False:
+        if cumulative == False:  # return(time_interval, list of satellites visible during window of time)
+            for window in range(n_windows):
+                self.t = start_time + timedelta(minutes=duration*window)
+                Result.append(self.t)
+                temp = self.max(satlist_url, self.t, duration, sample_interval, location)
+                count_list.append(temp[1])  # adding count only
+                satellite_list.append(temp[2])
+            max_value = max(count_list)
+            max_index = count_list.index(max_value)
+            max_time_value = Result[max_index]
+            max_satellite_list = satellite_list[max_index]
+            string = max_time_value.strftime("%H") + ":" + max_time_value.strftime("%M")
+            return (string, max_value, max_satellite_list)
+
+        elif cumulative == True:
             for window in range(n_windows):
                 self.t = start_time + timedelta(minutes=duration*window)
                 next_time = start_time + timedelta(minutes = duration * (window+1))
                 Result.append((self.t, next_time))
-                temp = self.max(satlist_url, self.t, duration, sample_interval, location)
-                maxCountList.append(temp[1])  # adding count only
-            max_value = max(maxCountList)
-            max_index = maxCountList.index(max_value)
+                temp = self.total(satlist_url, self.t, duration, sample_interval, location)
+                count_list.append(temp[1])  # adding count only
+            max_value = max(count_list)
+            max_index = count_list.index(max_value)
             max_time_value = Result[max_index]
             string = ""
             string = string + max_time_value[0].strftime("%H") + ":" + max_time_value[0].strftime("%M") + "," + max_time_value[1].strftime("%H") + ":" + max_time_value[1].strftime("%M")
             return (string, max_value)
-
-        elif cumulative == True:
-            return self.total(satlist_url, start_time, duration, sample_interval, location)
 
         """
                 print(start_time)
@@ -156,13 +167,20 @@ class Scheduler:
         @location: the user's location
         @return: a tuple (time interval, max_number_of_satellites)
         """
-        #Loading list of satellites
+
+        # Loading list of satellites
         satellites = load.tle(satlist_url)
 
-        List = []
+        # Local variables used inside loop
         UTC_ZONE = timezone('UTC')
+        current_max_list = []
+        max_count = 0
+
         for j in range(0, duration, sample_interval):
-            count = 0  # Resetting count after each iteration
+            # Resetting local variables after each iteration
+            satellite_list = []
+            count = 0
+
             # Getting time we want to calculate
             self.t = start_time + timedelta(minutes = j)
             e = UTC_ZONE.localize(self.t)
@@ -172,20 +190,24 @@ class Scheduler:
                 if isinstance(i, str):
                     continue
 
+                # Determining whether satellite is visible or not
                 satellite = satellites[i]
                 bluffton = Topos(location[0], location[1])
                 difference = satellite - bluffton
                 topocentric = difference.at(self.t)
-
                 alt, az, distance = topocentric.altaz()
 
                 if alt.degrees > 0:
+                    satellite_list.append(satellite)
                     count += 1
-            end_time = start_time + timedelta(minutes = duration)
-            string = ""
-            string = string + start_time.strftime("%H") + ":" + start_time.strftime("%M") + "," + end_time.strftime("%H") + ":" + end_time.strftime("%M")
-            List.append((string,count))
-        return max(List, key = lambda item:item[1])
+
+            # keeping record of max number of satellites visible at any time within interval
+            if count > max_count:
+                current_max_list = satellite_list
+                max_count = count
+                peak_time = start_time + timedelta(minutes = j)
+            string = start_time.strftime("%H") + ":" + start_time.strftime("%M")
+        return (string, max_count, current_max_list)
 
     def total(self, satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
     start_time=datetime.now(),duration=60, sample_interval=1,
@@ -199,20 +221,28 @@ class Scheduler:
         @location: the user's location
         @return: a tuple (time interval, total number of distinct satellites)
         """
+
+        # Loading list of satellites
         satellites = load.tle(satlist_url)
 
-        List = []
+        # Local variables used inside loop
+        satellite_list = []
         UTC_ZONE = timezone('UTC')
+
         for j in range(0, duration, sample_interval):
+            # Resetting local variables
+
             # Getting time we want to calculate
             self.t = start_time + timedelta(minutes=j)
             e = UTC_ZONE.localize(self.t)
             self.t = self.ts.utc(e)
 
+            # Looping through satellites list
             for i in satellites:
                 if isinstance(i, str):
                     continue
 
+                # Determining whether satellite is visible or not
                 satellite = satellites[i]
                 bluffton = Topos(location[0], location[1])
                 difference = satellite - bluffton
@@ -220,26 +250,29 @@ class Scheduler:
 
                 alt, az, distance = topocentric.altaz()
 
-                if alt.degrees > 0 and satellite not in List:
-                    List.append(satellite)
+                if alt.degrees > 0 and satellite not in satellite_list:
+                    satellite_list.append(satellite)
         self.t = 0
-        end_time = start_time + timedelta(minutes=duration)
-        string = ""
-        string = string + start_time.strftime("%H") + ":" + start_time.strftime("%M") + "," + end_time.strftime("%H") + ":" +  end_time.strftime("%M")
-        return (string,len(List))
+        string = start_time.strftime("%H") + ":" + start_time.strftime("%M")
+        return (string,len(satellite_list), satellite_list)
 
 
 Testing = Scheduler()
 # maxTest = Testing.max(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
 #     start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021))
-# print(maxTest[0], maxTest[1])
+# print(maxTest)
+
+totalTest = Testing.total(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+    start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021))
+print(totalTest)
+
 #
-# totalTest = Testing.total(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-#     start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021))
-# print(totalTest[0], totalTest[1])
-
-
-findTest = Testing.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-start_time=datetime.now(), n_windows=5, duration=60, sample_interval=1, cumulative=False,
-location=(-37.910496,145.134021))
-print(findTest)
+# findTest = Testing.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+# start_time=datetime.now(), n_windows=10, duration=60, sample_interval=1, cumulative=False,
+# location=(-37.910496,145.134021))
+# print(findTest)
+#
+# findTestTrue = Testing.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+# start_time=datetime.now(), n_windows=24, duration=60, sample_interval=1, cumulative=True,
+# location=(-37.910496,145.134021))
+# print(findTestTrue)
