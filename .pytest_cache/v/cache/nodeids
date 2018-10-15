@@ -1,0 +1,5 @@
+[
+  "schedulerTest.py::SchedulerTest::test_exceptionthrown",
+  "schedulerTest.py::SchedulerTest::test_load_satellites",
+  "schedulerTest.py::SchedulerTest::test_max"
+]
