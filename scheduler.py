@@ -31,13 +31,6 @@ class Scheduler:
         self.ts = self._skyload.timescale()
         self.t = 0
 
-    def prompt(self):
-        n_windows = input("?")
-        duration = input("?")
-        sampleInterval = input("?")
-        cumulative = input("?")
-        return (n_windows, duration, sampleInterval, cumulative)
-
     def load_satellites(self, satlist_url='http://celestrak.com/NORAD/elements/visual.txt'):
         """
         loads the list of satellites from a given url into an array
@@ -129,46 +122,7 @@ class Scheduler:
             # string = max_time_value.strftime("%H") + ":" + max_time_value.strftime("%M")
             return (max_time_value, max_satellite_list)  # return (string, max_value, max_satellite_list)
 
-        """
-                print(start_time)
-        #Loading list of satellites
-        satellites = load.tle(satlist_url)
-
-        #Getting current time
-        self.t = self.ts.now()
-        print(self.t.utc_jpl())
-
-        #Iterating over list of satellites to determine if they are over or below the horizon
-        print(satellites)
-        for i in satellites:
-            if isinstance(i, str):
-                continue
-
-
-            print(i)
-
-            satellite = satellites[i]
-            bluffton = Topos(location[0], location[1])
-            difference = satellite - bluffton
-            topocentric = difference.at(self.t)
-
-            alt, az, distance = topocentric.altaz()
-
-            resultString=""
-            resultString = str(satellites[i])
-            if alt.degrees > 0:
-                resultString+=" is above the horizon"
-                print(resultString)
-            else:
-                resultString+=" is not above the horizon"
-                print(resultString)
-            # print(alt)
-            # print(az)
-            # print(distance.km)
-        """
-
         self.t = 0
-        # return (start_time, ["ISS (ZARYA)", "COSMOS-123"])
 
     def max(self, satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
     start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021)):
@@ -184,7 +138,6 @@ class Scheduler:
 
         # Loading list of satellites
         satellites = self.load_satellites(satlist_url)
-        print(satellites)
         # Local variables used inside loop
         UTC_ZONE = timezone('UTC')
         current_max_list = []
@@ -269,27 +222,3 @@ class Scheduler:
         self.t = 0
         timestring = start_time.strftime("%H") + ":" + start_time.strftime("%M")
         return (timestring, len(satellite_list), satellite_list)
-
-
-# Testing = Scheduler()
-# print("TESTING MAX FUNCTION:")
-# maxTest = Testing.max(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-#     start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021))
-# print(maxTest, "\n")
-#
-# print("TESTING TOTAL FUNCTION:")
-# totalTest = Testing.total(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-#     start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021))
-# print(totalTest, "\n")
-#
-# print("TESTING FIND_TIME WITH CUMULATIVE = FALSE:")
-# findTest = Testing.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-# start_time=datetime.now(), n_windows=5, duration=60, sample_interval=1, cumulative=False,
-# location=(-37.910496,145.134021))
-# print(findTest, "\n")
-#
-# print("TESTING FIND_TIME WITH CUMULATIVE = TRUE: ")
-# findTestTrue = Testing.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-# start_time=datetime.now(), n_windows=5, duration=60, sample_interval=1, cumulative=True,
-# location=(-37.910496,145.134021))
-# print(findTestTrue, "\n")

@@ -19,12 +19,13 @@ class SchedulerTest(unittest.TestCase):
                                          ("01:00",5,["sat1", "sat2", "sat3", "sat4", "sat5"])]
         self.assertTrue(realScheduler.max.call_count == 0)
         (timeInterval, listOfSatellites) = realScheduler.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-    start_time=datetime.now(), n_windows=3, duration=60, sample_interval=1, cumulative=False, location=(-37.910496,145.134021))
+start_time=datetime.now(), n_windows=3, duration=60, sample_interval=1, cumulative=False, location=(-37.910496,145.134021))
         self.assertTrue(timeInterval == "01:00")
         self.assertTrue(listOfSatellites == ["sat1","sat2","sat3","sat4","sat5"])
         self.assertTrue(realScheduler.max.call_count == 3)
 
     def test_findTime_cumulative_true(self):
+        print("hello1")
         """Tests functionality of find_time when cumulative = True, using mocking"""
         realScheduler = Scheduler()
         realScheduler.total = MagicMock()
@@ -90,13 +91,6 @@ class SchedulerTest(unittest.TestCase):
             (stime, satellites) = self.scheduler.find_time(location=(-100,200))
         with self.assertRaises(IllegalArgumentException):
             (stime, satellites) = self.scheduler.find_time(cumulative="hello")
-
-    # def test_itsalive(self):
-    #     (stime, satellites) = self.scheduler.find_time()
-    #     self.assertTrue(type(stime)==type("abc"))
-    #     self.assertTrue(satellites[0]=="ISS (ZARYA)")
-    #     self.assertTrue(satellites[1]=="COSMOS-123")
-
 
 if __name__ == "__main__":
     unittest.main()
