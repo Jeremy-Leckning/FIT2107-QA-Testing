@@ -220,8 +220,8 @@ class Scheduler:
                 current_max_list = satellite_list
                 max_count = count
                 peak_time = start_time + timedelta(minutes = j)
-            string = start_time.strftime("%H") + ":" + start_time.strftime("%M")
-        return (string, max_count, current_max_list)
+            timestring = start_time.strftime("%H") + ":" + start_time.strftime("%M")
+        return (timestring, max_count, current_max_list)
 
     def total(self, satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
     start_time=datetime.now(),duration=60, sample_interval=1,
@@ -267,8 +267,8 @@ class Scheduler:
                 if alt.degrees > 0 and satellite not in satellite_list:
                     satellite_list.append(satellite)
         self.t = 0
-        string = start_time.strftime("%H") + ":" + start_time.strftime("%M")
-        return (string, len(satellite_list), satellite_list)
+        timestring = start_time.strftime("%H") + ":" + start_time.strftime("%M")
+        return (timestring, len(satellite_list), satellite_list)
 
 
 # Testing = Scheduler()

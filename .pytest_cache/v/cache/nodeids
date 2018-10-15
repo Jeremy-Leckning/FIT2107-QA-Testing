@@ -3,5 +3,6 @@
   "schedulerTest.py::SchedulerTest::test_findTime_cumulative_false",
   "schedulerTest.py::SchedulerTest::test_findTime_cumulative_true",
   "schedulerTest.py::SchedulerTest::test_load_satellites",
+  "schedulerTest.py::SchedulerTest::test_max",
   "schedulerTest.py::SchedulerTest::test_total"
 ]

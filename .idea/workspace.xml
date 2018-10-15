@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ab537fb2-2cff-497f-95d5-fbdc58b278c9" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/FIT2107-A3-Team-jlec0001-cfon0005.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FIT2107-A3-Team-jlec0001-cfon0005.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.pytest_cache/v/cache/lastfailed" beforeDir="false" afterPath="$PROJECT_DIR$/.pytest_cache/v/cache/lastfailed" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.pytest_cache/v/cache/nodeids" beforeDir="false" afterPath="$PROJECT_DIR$/.pytest_cache/v/cache/nodeids" afterDir="false" />
@@ -22,8 +20,8 @@
       <file leaf-file-name="scheduler.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scheduler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1127">
-              <caret line="105" column="39" selection-start-line="105" selection-start-column="39" selection-end-line="105" selection-end-column="39" />
+            <state relative-caret-position="204">
+              <caret line="222" column="16" selection-start-line="222" selection-start-column="16" selection-end-line="222" selection-end-column="16" />
               <folding>
                 <element signature="e#138#169#0" expanded="true" />
               </folding>
@@ -34,8 +32,8 @@
       <file leaf-file-name="schedulerTest.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/schedulerTest.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+            <state relative-caret-position="1190">
+              <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -58,9 +56,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-58" />
+    <option name="x" value="-59" />
     <option name="width" value="1185" />
-    <option name="height" value="973" />
+    <option name="height" value="974" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -187,24 +185,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 16h 07m 22s.xml">
-      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 16h 07m 45s.xml">
-      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 16h 08m 05s.xml">
-      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 16h 11m 12s.xml">
-      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 16h 12m 20s.xml">
-      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 16h 12m 35s.xml">
-      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
-    </history-entry>
     <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 16h 13m 14s.xml">
       <configuration name="py.test in schedulerTest.py" configurationId="tests" />
     </history-entry>
@@ -215,6 +195,24 @@
       <configuration name="py.test in schedulerTest.py" configurationId="tests" />
     </history-entry>
     <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 16h 16m 31s.xml">
+      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 19h 17m 40s.xml">
+      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 19h 21m 03s.xml">
+      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 19h 25m 26s.xml">
+      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 19h 27m 10s.xml">
+      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 19h 28m 52s.xml">
+      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 19h 29m 18s.xml">
       <configuration name="py.test in schedulerTest.py" configurationId="tests" />
     </history-entry>
   </component>
@@ -245,6 +243,26 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/scheduler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1785">
+          <caret line="105" column="39" selection-start-line="105" selection-start-column="39" selection-end-line="105" selection-end-column="39" />
+          <folding>
+            <element signature="e#138#169#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/schedulerTest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/scheduler.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3808">
@@ -316,10 +334,17 @@
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/skyfield/vectorlib.py" />
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/unittest/mock.py" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.py" />
+    <entry file="file://$PROJECT_DIR$/.gitlab-ci.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/scheduler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1127">
-          <caret line="105" column="39" selection-start-line="105" selection-start-column="39" selection-end-line="105" selection-end-column="39" />
+        <state relative-caret-position="204">
+          <caret line="222" column="16" selection-start-line="222" selection-start-column="16" selection-end-line="222" selection-end-column="16" />
           <folding>
             <element signature="e#138#169#0" expanded="true" />
           </folding>
@@ -328,8 +353,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/schedulerTest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        <state relative-caret-position="1190">
+          <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>

@@ -52,24 +52,32 @@ class SchedulerTest(unittest.TestCase):
         schedulerMock.load_satellites.assert_called_once()  # assert that is has been called only once
         schedulerMock.load_satellites.assert_called_with()  # called with no arguments
 
-    # def test_max(self):
-    #     realScheduler = Scheduler()
-    #     # listOfSat = {694: <EarthSatellite 'ATLAS CENTAUR 2' number=694 epoch=2018-10-08T17:08:05Z>}
-    #
-    #     # realScheduler.load_satellites = MagicMock(return_value = listOfSat)
-    #     # schedulerMock = MagicMock()
-    #     # schedulerMock = create_autospec(realScheduler)
-    #
-    #     (startTime, maximumNumber, satellites) = realScheduler.max(satlist_url='http://celestrak.com/NORAD/elements/visual.txt', start_time=datetime(2018, 10, 8, 0, 0, 0, 0), duration=60, sample_interval=4, location=(-37.910496,145.134021))
-    #     self.assertTrue(type(maximumNumber) == int)
-    #     self.assertTrue(maximumNumber >= 0)
-    #     print(maximumNumber)
-    #     self.assertTrue(maximumNumber == 1)
+    def test_max(self):
+        """ tests max function """
+        start_time = datetime.now()
+        (time, maxCount, satList) = self.scheduler.max(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+        start_time=start_time, duration=60, sample_interval=1, location=(-37.910496,145.134021))
+
+        self.assertTrue(type(time) == str)
+        self.assertTrue(type(maxCount) == int)
+        self.assertTrue(len(satList) == maxCount)
+        self.assertTrue(time == start_time.strftime("%H") + ":" + start_time.strftime("%M"))
 
     def test_total(self):
-        pass
+        """ tests total function"""
+        start_time = datetime.now()
+        (time, maxCount, satList) = self.scheduler.total(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+        start_time=start_time, duration=60, sample_interval=1, location=(-37.910496,145.134021))
+
+        self.assertTrue(type(time) == str)
+        self.assertTrue(type(maxCount) == int)
+        self.assertTrue(len(satList) == maxCount)
+        self.assertTrue(time == start_time.strftime("%H") + ":" + start_time.strftime("%M"))
 
     def test_exceptionthrown(self):
+        """
+        tests whether IllegalArguentExceptions are thrown when an illegal argument is used in the find_time function
+        """
         with self.assertRaises(IllegalArgumentException):
             (stime, satellites) = self.scheduler.find_time(start_time="now")
         with self.assertRaises(IllegalArgumentException):
