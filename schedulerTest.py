@@ -6,40 +6,39 @@ from unittest.mock import patch, MagicMock, create_autospec
 
 
 class SchedulerTest(unittest.TestCase):
-    '''Tests for the scheduler class.  Add more tests
-    to test the code that you write'''
-
+    """Tests for the scheduler class.  Add more tests
+    to test the code that you write"""
     def setUp(self):
         self.scheduler = Scheduler()
 
-
-    def test_findTime(self):
+    def test_findTime_cumulative_false(self):
+        """Tests functionality of find_time when cumulative = False, using mocking"""
         realScheduler = Scheduler()
         realScheduler.max = MagicMock()
-        realScheduler.max.side_effect = [("00:00", 4, ["sat1", "sat2", "sat3", "sat4"]),("00:00", 2, ["sat1", "sat2"]),("01:00",5,["sat1", "sat2", "sat3", "sat4", "sat5"])]
+        realScheduler.max.side_effect = [("00:00", 4, ["sat1", "sat2", "sat3", "sat4"]),("00:00", 2, ["sat1", "sat2"]),
+                                         ("01:00",5,["sat1", "sat2", "sat3", "sat4", "sat5"])]
         self.assertTrue(realScheduler.max.call_count == 0)
         (timeInterval, listOfSatellites) = realScheduler.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
     start_time=datetime.now(), n_windows=3, duration=60, sample_interval=1, cumulative=False, location=(-37.910496,145.134021))
-        print(timeInterval)
-        print(listOfSatellites)
+        self.assertTrue(timeInterval == "01:00")
         self.assertTrue(listOfSatellites == ["sat1","sat2","sat3","sat4","sat5"])
-        self.assertTrue(len(listOfSatellites)>=0)
         self.assertTrue(realScheduler.max.call_count == 3)
 
-
-        (timeInterval, listOfSatellites) = self.scheduler.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-    start_time=datetime.now(), n_windows=2, duration=60, sample_interval=1, cumulative=False,
-    location=(-37.910496,145.134021))
-
-
-
-
-    def test_total(self):
-        totalNumberOfSatellites = self.scheduler.total(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-    start_time=datetime.now(),duration=60, sample_interval=1,
-    location=(-37.910496,145.134021))
-        self.assertTrue(type(totalNumberOfSatellites) == int)
-        self.assertTrue(totalNumberOfSatellites >= 0)
+    def test_findTime_cumulative_true(self):
+        """Tests functionality of find_time when cumulative = True, using mocking"""
+        realScheduler = Scheduler()
+        realScheduler.total = MagicMock()
+        realScheduler.total.side_effect = [("00:00", 4, ["sat1", "sat6", "sat3", "sat4"]), ("01:00", 2, ["sat1", "sat7"]),
+                                           ("02:00", 8, ["sat8", "sat9", "sat10", "sat4", "sat5, sat11, sat2, sat3"]),
+                                           ("03:00", 5, ["sat1", "sat2", "sat3", "sat4", "sat5"])]
+        self.assertTrue(realScheduler.total.call_count == 0)
+        (timeInterval, listOfSatellites) = realScheduler.find_time(
+            satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+            start_time=datetime.now(), n_windows=4, duration=60, sample_interval=1, cumulative=True,
+            location=(-37.910496, 145.134021))
+        self.assertTrue(timeInterval == "02:00")
+        self.assertTrue(listOfSatellites == ["sat8", "sat9", "sat10", "sat4", "sat5, sat11, sat2, sat3"])
+        self.assertTrue(realScheduler.total.call_count == 4)
 
     def test_load_satellites(self):
         """
@@ -50,8 +49,8 @@ class SchedulerTest(unittest.TestCase):
         schedulerMock.load_satellites.return_value = ["sat1", "sat2", "sat3", "sat4"]
         satellites = schedulerMock.load_satellites()
         self.assertTrue(satellites == ["sat1", "sat2", "sat3", "sat4"])
-        schedulerMock.load_satellites.assert_called_once() # assert that is has been called only once
-        schedulerMock.load_satellites.assert_called_with() # called with no arguments
+        schedulerMock.load_satellites.assert_called_once()  # assert that is has been called only once
+        schedulerMock.load_satellites.assert_called_with()  # called with no arguments
 
     # def test_max(self):
     #     realScheduler = Scheduler()
@@ -67,6 +66,8 @@ class SchedulerTest(unittest.TestCase):
     #     print(maximumNumber)
     #     self.assertTrue(maximumNumber == 1)
 
+    def test_total(self):
+        pass
 
     def test_exceptionthrown(self):
         with self.assertRaises(IllegalArgumentException):
@@ -82,13 +83,11 @@ class SchedulerTest(unittest.TestCase):
         with self.assertRaises(IllegalArgumentException):
             (stime, satellites) = self.scheduler.find_time(cumulative="hello")
 
-"""
-    def test_itsalive(self):
-        (stime, satellites) = self.scheduler.find_time()
-        self.assertTrue(type(stime)==type(datetime.now()))
-        self.assertTrue(satellites[0]=="ISS (ZARYA)")
-        self.assertTrue(satellites[1]=="COSMOS-123")
-"""
+    # def test_itsalive(self):
+    #     (stime, satellites) = self.scheduler.find_time()
+    #     self.assertTrue(type(stime)==type("abc"))
+    #     self.assertTrue(satellites[0]=="ISS (ZARYA)")
+    #     self.assertTrue(satellites[1]=="COSMOS-123")
 
 
 if __name__ == "__main__":

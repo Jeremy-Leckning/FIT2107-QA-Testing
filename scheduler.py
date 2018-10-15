@@ -39,6 +39,10 @@ class Scheduler:
         return (n_windows, duration, sampleInterval, cumulative)
 
     def load_satellites(self, satlist_url='http://celestrak.com/NORAD/elements/visual.txt'):
+        """
+        loads the list of satellites from a given url into an array
+        @return: list of satellite
+        """
         satellites = load.tle(satlist_url)
         return satellites
 
@@ -97,30 +101,33 @@ class Scheduler:
 
             for window in range(n_windows):
                 self.t = start_time + timedelta(minutes=duration*window)
-                time_list.append(self.t)
+                #time_list.append(self.t)
                 temp = self.max(satlist_url, self.t, duration, sample_interval, location)
+                time_list.append(temp[0])
                 count_list.append(temp[1])  # adding count only
                 satellite_list.append(temp[2])
             max_value = max(count_list)
             max_index = count_list.index(max_value)
             max_time_value = time_list[max_index]
             max_satellite_list = satellite_list[max_index]
-            string = max_time_value.strftime("%H") + ":" + max_time_value.strftime("%M")
-            return (string, max_satellite_list) #  return (string, max_value, max_satellite_list)
+            #string = max_time_value.strftime("%H") + ":" + max_time_value.strftime("%M")
+            return (max_time_value, max_satellite_list) #  return (string, max_value, max_satellite_list)
 
         elif cumulative == True:
             for window in range(n_windows):
                 self.t = start_time + timedelta(minutes=duration*window)
-                time_list.append(self.t)
+                # time_list.append(self.t)
                 temp = self.total(satlist_url, self.t, duration, sample_interval, location)
+                time_list.append(temp[0])
                 count_list.append(temp[1])  # adding count only
-                satellite_list.append(temp[2])
+                satellite_list.append(temp[2]) # satellite_list holds arrays of satellites for each windows. Hence
+                # satellite_list[0] returns the list of satellites for the first viewing window
             max_value = max(count_list)
             max_index = count_list.index(max_value)
             max_time_value = time_list[max_index]
             max_satellite_list = satellite_list[max_index]
-            string = max_time_value.strftime("%H") + ":" + max_time_value.strftime("%M")
-            return (string, max_satellite_list)  # return (string, max_value, max_satellite_list)
+            # string = max_time_value.strftime("%H") + ":" + max_time_value.strftime("%M")
+            return (max_time_value, max_satellite_list)  # return (string, max_value, max_satellite_list)
 
         """
                 print(start_time)
@@ -172,7 +179,7 @@ class Scheduler:
         @param duration: the duration during which we want to measure the number of satellites visible
         @sample_interval: the intervals of time during which we will measure the number of visible satellites
         @location: the user's location
-        @return: a tuple (time interval, max_number_of_satellites)
+        @return: a tuple (time interval, max_number_of_satellites, list of satellites)
         """
 
         # Loading list of satellites
@@ -226,7 +233,7 @@ class Scheduler:
         @param duration: the duration during which we want to measure the number of satellites visible
         @sample_interval: the intervals of time during which we will measure the number of visible satellites
         @location: the user's location
-        @return: a tuple (time interval, total number of distinct satellites)
+        @return: a tuple (start_time, number of distinct satellites, list of distinct satellites)
         """
 
         # Loading list of satellites
@@ -261,7 +268,7 @@ class Scheduler:
                     satellite_list.append(satellite)
         self.t = 0
         string = start_time.strftime("%H") + ":" + start_time.strftime("%M")
-        return (string,len(satellite_list), satellite_list)
+        return (string, len(satellite_list), satellite_list)
 
 
 # Testing = Scheduler()
