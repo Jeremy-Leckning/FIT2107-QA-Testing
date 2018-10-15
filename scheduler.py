@@ -106,7 +106,7 @@ class Scheduler:
             max_time_value = time_list[max_index]
             max_satellite_list = satellite_list[max_index]
             string = max_time_value.strftime("%H") + ":" + max_time_value.strftime("%M")
-            return (string, max_value, max_satellite_list)
+            return (string, max_satellite_list) #  return (string, max_value, max_satellite_list)
 
         elif cumulative == True:
             for window in range(n_windows):
@@ -120,7 +120,7 @@ class Scheduler:
             max_time_value = time_list[max_index]
             max_satellite_list = satellite_list[max_index]
             string = max_time_value.strftime("%H") + ":" + max_time_value.strftime("%M")
-            return (string, max_value, max_satellite_list)
+            return (string, max_satellite_list)  # return (string, max_value, max_satellite_list)
 
         """
                 print(start_time)
@@ -264,25 +264,25 @@ class Scheduler:
         return (string,len(satellite_list), satellite_list)
 
 
-Testing = Scheduler()
-print("TESTING MAX FUNCTION:")
-maxTest = Testing.max(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-    start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021))
-print(maxTest, "\n")
-
-print("TESTING TOTAL FUNCTION:")
-totalTest = Testing.total(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-    start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021))
-print(totalTest, "\n")
-
-print("TESTING FIND_TIME WITH CUMULATIVE = FALSE:")
-findTest = Testing.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-start_time=datetime.now(), n_windows=5, duration=60, sample_interval=1, cumulative=False,
-location=(-37.910496,145.134021))
-print(findTest, "\n")
-
-print("TESTING FIND_TIME WITH CUMULATIVE = TRUE: ")
-findTestTrue = Testing.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-start_time=datetime.now(), n_windows=5, duration=60, sample_interval=1, cumulative=True,
-location=(-37.910496,145.134021))
-print(findTestTrue, "\n")
+# Testing = Scheduler()
+# print("TESTING MAX FUNCTION:")
+# maxTest = Testing.max(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+#     start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021))
+# print(maxTest, "\n")
+#
+# print("TESTING TOTAL FUNCTION:")
+# totalTest = Testing.total(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+#     start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021))
+# print(totalTest, "\n")
+#
+# print("TESTING FIND_TIME WITH CUMULATIVE = FALSE:")
+# findTest = Testing.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+# start_time=datetime.now(), n_windows=5, duration=60, sample_interval=1, cumulative=False,
+# location=(-37.910496,145.134021))
+# print(findTest, "\n")
+#
+# print("TESTING FIND_TIME WITH CUMULATIVE = TRUE: ")
+# findTestTrue = Testing.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+# start_time=datetime.now(), n_windows=5, duration=60, sample_interval=1, cumulative=True,
+# location=(-37.910496,145.134021))
+# print(findTestTrue, "\n")

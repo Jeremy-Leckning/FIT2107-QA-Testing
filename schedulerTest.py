@@ -11,7 +11,7 @@ class SchedulerTest(unittest.TestCase):
 
     def setUp(self):
         self.scheduler = Scheduler()
-
+    """
     def test_findTime(self):
         (timeInterval, totalNumberOfSatellites) = self.scheduler.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
     start_time=datetime.now(), n_windows=2, duration=60, sample_interval=1, cumulative=True,
@@ -36,6 +36,17 @@ class SchedulerTest(unittest.TestCase):
     location=(-37.910496,145.134021))
         self.assertTrue(type(totalNumberOfSatellites) == int)
         self.assertTrue(totalNumberOfSatellites >= 0)
+    """
+
+    @patch('scheduler.Scheduler')
+    def test_load_satellites(self, MockScheduler):
+        scheduler = MockScheduler()
+
+        scheduler.load_satellites.return_value = ["sat1", "sat2", "sat3", "sat4"]
+        satellites = scheduler.load_satellites
+        assert MockScheduler is scheduler.Scheduler
+
+
 
 
     def test_exceptionthrown(self):
