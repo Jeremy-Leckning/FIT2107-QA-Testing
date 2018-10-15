@@ -177,7 +177,7 @@ class Scheduler:
 
         # Loading list of satellites
         satellites = self.load_satellites(satlist_url)
-
+        print(satellites)
         # Local variables used inside loop
         UTC_ZONE = timezone('UTC')
         current_max_list = []

@@ -2,6 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ab537fb2-2cff-497f-95d5-fbdc58b278c9" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/FIT2107-A3-Team-jlec0001-cfon0005.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FIT2107-A3-Team-jlec0001-cfon0005.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.pytest_cache/v/cache/lastfailed" beforeDir="false" afterPath="$PROJECT_DIR$/.pytest_cache/v/cache/lastfailed" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.pytest_cache/v/cache/nodeids" beforeDir="false" afterPath="$PROJECT_DIR$/.pytest_cache/v/cache/nodeids" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/schedulerTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/schedulerTest.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -12,12 +18,24 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="schedulerTest.py" pinned="false" current-in-tab="false">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="scheduler.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scheduler.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="213">
+              <caret line="100" selection-start-line="100" selection-end-line="100" />
+              <folding>
+                <element signature="e#138#169#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="schedulerTest.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/schedulerTest.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-68">
-              <caret line="40" column="35" lean-forward="true" selection-start-line="40" selection-start-column="35" selection-end-line="40" selection-end-column="35" />
+            <state relative-caret-position="196">
+              <caret line="17" column="39" lean-forward="true" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -25,12 +43,32 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="scheduler.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/scheduler.py">
+      <file leaf-file-name="scratch.py" pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="205" lean-forward="true" selection-start-line="205" selection-end-line="205" />
+            <state relative-caret-position="102">
+              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="api.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/skyfield/api.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1224">
+              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+              <folding>
+                <element signature="e#0#333#1" />
+                <element signature="e#334#363#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="vectorlib.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/skyfield/vectorlib.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2057" />
           </provider>
         </entry>
       </file>
@@ -42,21 +80,22 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/scheduler.py" />
+        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.py" />
         <option value="$PROJECT_DIR$/schedulerTest.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-55" />
+    <option name="x" value="-56" />
     <option name="width" value="1185" />
-    <option name="height" value="970" />
+    <option name="height" value="971" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -64,14 +103,25 @@
               <item name="FIT2107-A3-Team-jlec0001-cfon0005" type="b2602c69:ProjectViewProjectNode" />
               <item name="FIT2107-A3-Team-jlec0001-cfon0005" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="FIT2107-A3-Team-jlec0001-cfon0005" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
+            </path>
+            <path>
+              <item name="FIT2107-A3-Team-jlec0001-cfon0005" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
+              <item name="Scratches" type="d62648e6:ScratchProjectViewPane$MyRootNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -85,7 +135,53 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python tests.py.test for schedulerTest.SchedulerTest.test_findTime">
+    <configuration name="scratch" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="FIT2107-A3-Team-jlec0001-cfon0005" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="py.test for schedulerTest.SchedulerTest.test_findTime" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="FIT2107-A3-Team-jlec0001-cfon0005" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;schedulerTest.SchedulerTest.test_findTime&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+    </configuration>
+    <configuration name="py.test for schedulerTest.SchedulerTest.test_max" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="FIT2107-A3-Team-jlec0001-cfon0005" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;schedulerTest.SchedulerTest.test_max&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+    </configuration>
     <configuration name="py.test in schedulerTest.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="FIT2107-A3-Team-jlec0001-cfon0005" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -100,8 +196,17 @@
       <option name="_new_target" value="&quot;$PROJECT_DIR$/schedulerTest.py&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
     </configuration>
+    <list>
+      <item itemvalue="Python tests.py.test in schedulerTest.py" />
+      <item itemvalue="Python tests.py.test for schedulerTest.SchedulerTest.test_max" />
+      <item itemvalue="Python.scratch" />
+      <item itemvalue="Python tests.py.test for schedulerTest.SchedulerTest.test_findTime" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.py.test for schedulerTest.SchedulerTest.test_findTime" />
+        <item itemvalue="Python.scratch" />
+        <item itemvalue="Python tests.py.test for schedulerTest.SchedulerTest.test_max" />
         <item itemvalue="Python tests.py.test in schedulerTest.py" />
       </list>
     </recent_temporary>
@@ -120,58 +225,58 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 12h 43m 14s.xml">
-      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
+    <history-entry file="py_test_for_schedulerTest_SchedulerTest_test_findTime - 2018.10.15 at 14h 54m 01s.xml">
+      <configuration name="py.test for schedulerTest.SchedulerTest.test_findTime" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 12h 43m 46s.xml">
-      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
+    <history-entry file="py_test_for_schedulerTest_SchedulerTest_test_findTime - 2018.10.15 at 14h 54m 24s.xml">
+      <configuration name="py.test for schedulerTest.SchedulerTest.test_findTime" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 12h 44m 01s.xml">
-      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
+    <history-entry file="py_test_for_schedulerTest_SchedulerTest_test_findTime - 2018.10.15 at 14h 54m 30s.xml">
+      <configuration name="py.test for schedulerTest.SchedulerTest.test_findTime" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 12h 45m 42s.xml">
-      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
+    <history-entry file="py_test_for_schedulerTest_SchedulerTest_test_findTime - 2018.10.15 at 14h 55m 22s.xml">
+      <configuration name="py.test for schedulerTest.SchedulerTest.test_findTime" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 12h 48m 20s.xml">
-      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
+    <history-entry file="py_test_for_schedulerTest_SchedulerTest_test_findTime - 2018.10.15 at 14h 55m 53s.xml">
+      <configuration name="py.test for schedulerTest.SchedulerTest.test_findTime" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 12h 51m 57s.xml">
-      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
+    <history-entry file="py_test_for_schedulerTest_SchedulerTest_test_findTime - 2018.10.15 at 14h 58m 04s.xml">
+      <configuration name="py.test for schedulerTest.SchedulerTest.test_findTime" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 12h 55m 29s.xml">
-      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
+    <history-entry file="py_test_for_schedulerTest_SchedulerTest_test_findTime - 2018.10.15 at 14h 58m 45s.xml">
+      <configuration name="py.test for schedulerTest.SchedulerTest.test_findTime" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 12h 55m 58s.xml">
-      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
+    <history-entry file="py_test_for_schedulerTest_SchedulerTest_test_findTime - 2018.10.15 at 14h 59m 11s.xml">
+      <configuration name="py.test for schedulerTest.SchedulerTest.test_findTime" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 12h 56m 15s.xml">
-      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
+    <history-entry file="py_test_for_schedulerTest_SchedulerTest_test_findTime - 2018.10.15 at 15h 01m 22s.xml">
+      <configuration name="py.test for schedulerTest.SchedulerTest.test_findTime" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_schedulerTest_py - 2018.10.15 at 12h 56m 29s.xml">
-      <configuration name="py.test in schedulerTest.py" configurationId="tests" />
+    <history-entry file="py_test_for_schedulerTest_SchedulerTest_test_findTime - 2018.10.15 at 15h 03m 04s.xml">
+      <configuration name="py.test for schedulerTest.SchedulerTest.test_findTime" configurationId="tests" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-7" y="-7" width="1295" height="735" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24980484" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32968536" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Python Console" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Python Console" order="7" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3874598" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -180,7 +285,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/schedulerTest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-68">
+        <state relative-caret-position="612">
           <caret line="40" column="35" lean-forward="true" selection-start-line="40" selection-start-column="35" selection-end-line="40" selection-end-column="35" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
@@ -190,8 +295,68 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/scheduler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
+        <state relative-caret-position="3400">
           <caret line="205" lean-forward="true" selection-start-line="205" selection-end-line="205" />
+          <folding>
+            <element signature="e#138#169#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pycharm/_jb_pytest_runner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/skyfield/api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1224">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+          <folding>
+            <element signature="e#0#333#1" />
+            <element signature="e#334#363#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/skyfield/vectorlib.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2057" />
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/unittest/mock.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="118">
+          <caret line="1009" selection-start-line="1009" selection-end-line="1009" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scheduler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="100" selection-start-line="100" selection-end-line="100" />
+          <folding>
+            <element signature="e#138#169#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/schedulerTest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="17" column="39" lean-forward="true" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

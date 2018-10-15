@@ -1,3 +1,5 @@
 {
-  "schedulerTest.py::SchedulerTest::test_itsalive": true
+  "schedulerTest.py": true,
+  "schedulerTest.py::SchedulerTest::test_itsalive": true,
+  "schedulerTest.py::SchedulerTest::test_max": true
 }

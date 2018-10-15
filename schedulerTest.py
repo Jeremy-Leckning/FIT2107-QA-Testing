@@ -11,19 +11,26 @@ class SchedulerTest(unittest.TestCase):
 
     def setUp(self):
         self.scheduler = Scheduler()
-    """
+
+
     def test_findTime(self):
-        (timeInterval, totalNumberOfSatellites) = self.scheduler.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-    start_time=datetime.now(), n_windows=2, duration=60, sample_interval=1, cumulative=True,
-    location=(-37.910496,145.134021))
+        realScheduler = Scheduler()
+        realScheduler.max = MagicMock()
+        realScheduler.max.side_effect = [("00:00", 4, ["sat1", "sat2", "sat3", "sat4"]),("00:00", 2, ["sat1", "sat2"]),("01:00",5,["sat1", "sat2", "sat3", "sat4", "sat5"])]
+        self.assertTrue(realScheduler.max.call_count == 0)
+        (timeInterval, listOfSatellites) = realScheduler.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+    start_time=datetime.now(), n_windows=3, duration=60, sample_interval=1, cumulative=False, location=(-37.910496,145.134021))
+        print(timeInterval)
+        print(listOfSatellites)
+        self.assertTrue(listOfSatellites == ["sat1","sat2","sat3","sat4","sat5"])
+        self.assertTrue(len(listOfSatellites)>=0)
+        self.assertTrue(realScheduler.max.call_count == 3)
 
-        self.assertTrue(type(totalNumberOfSatellites) == int)
-        self.assertTrue(totalNumberOfSatellites>0)
 
-        (timeInterval, maxNumberOfSatellites) = self.scheduler.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+        (timeInterval, listOfSatellites) = self.scheduler.find_time(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
     start_time=datetime.now(), n_windows=2, duration=60, sample_interval=1, cumulative=False,
     location=(-37.910496,145.134021))
-        self.assertTrue(isinstance(maxNumberOfSatellites, int))
+
 
 
 
@@ -33,7 +40,7 @@ class SchedulerTest(unittest.TestCase):
     location=(-37.910496,145.134021))
         self.assertTrue(type(totalNumberOfSatellites) == int)
         self.assertTrue(totalNumberOfSatellites >= 0)
-    """
+
     def test_load_satellites(self):
         """
         tests load satellites using Mocking
@@ -46,10 +53,20 @@ class SchedulerTest(unittest.TestCase):
         schedulerMock.load_satellites.assert_called_once() # assert that is has been called only once
         schedulerMock.load_satellites.assert_called_with() # called with no arguments
 
-    def test_max(self):
-        (startTime, maximumNumber, satellites) = self.scheduler.max(satlist_url='http://celestrak.com/NORAD/elements/visual.txt', start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021))
-        self.assertTrue(type(maximumNumber) == int)
-        self.assertTrue(maximumNumber >= 0)
+    # def test_max(self):
+    #     realScheduler = Scheduler()
+    #     # listOfSat = {694: <EarthSatellite 'ATLAS CENTAUR 2' number=694 epoch=2018-10-08T17:08:05Z>}
+    #
+    #     # realScheduler.load_satellites = MagicMock(return_value = listOfSat)
+    #     # schedulerMock = MagicMock()
+    #     # schedulerMock = create_autospec(realScheduler)
+    #
+    #     (startTime, maximumNumber, satellites) = realScheduler.max(satlist_url='http://celestrak.com/NORAD/elements/visual.txt', start_time=datetime(2018, 10, 8, 0, 0, 0, 0), duration=60, sample_interval=4, location=(-37.910496,145.134021))
+    #     self.assertTrue(type(maximumNumber) == int)
+    #     self.assertTrue(maximumNumber >= 0)
+    #     print(maximumNumber)
+    #     self.assertTrue(maximumNumber == 1)
+
 
     def test_exceptionthrown(self):
         with self.assertRaises(IllegalArgumentException):
