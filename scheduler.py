@@ -18,7 +18,8 @@ class IllegalArgumentException(Exception):
         pass
 
     def __str__(self):
-        print("There is an error with the arguments")
+        returnString = "There is an error with the arguments"
+        return returnString
 
 
 class Scheduler:
@@ -121,8 +122,6 @@ class Scheduler:
             max_satellite_list = satellite_list[max_index]
             # string = max_time_value.strftime("%H") + ":" + max_time_value.strftime("%M")
             return (max_time_value, max_satellite_list)  # return (string, max_value, max_satellite_list)
-
-        self.t = 0
 
     def max(self, satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
     start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021)):
