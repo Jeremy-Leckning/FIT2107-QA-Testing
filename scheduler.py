@@ -152,20 +152,26 @@ class Scheduler:
 
                 # Determining whether satellite is visible or not
                 satellite = satellites[i]
-                bluffton = Topos(location[0], location[1])
-                difference = satellite - bluffton
-                topocentric = difference.at(self.t)
-                alt, az, distance = topocentric.altaz()
-
-                if alt.degrees > 0:
+                if self.satellite_visibility(satellite, location, self.t):
                     satellite_list.append(satellite)
                     count += 1
+                else:
+                    pass
+                # bluffton = Topos(location[0], location[1])
+                # difference = satellite - bluffton
+                # topocentric = difference.at(self.t)
+                # alt, az, distance = topocentric.altaz()
+                #
+                # if alt.degrees > 0:
+                #     satellite_list.append(satellite)
+                #     count += 1
 
             # keeping record of max number of satellites visible at any time within interval
             if count > max_count:
                 current_max_list = satellite_list
                 max_count = count
                 peak_time = start_time + timedelta(minutes = j)
+
             timestring = start_time.strftime("%H") + ":" + start_time.strftime("%M")
         return (timestring, max_count, current_max_list)
 
@@ -204,14 +210,31 @@ class Scheduler:
 
                 # Determining whether satellite is visible or not
                 satellite = satellites[i]
-                bluffton = Topos(location[0], location[1])
-                difference = satellite - bluffton
-                topocentric = difference.at(self.t)
 
-                alt, az, distance = topocentric.altaz()
-
-                if alt.degrees > 0 and satellite not in satellite_list:
+                if self.satellite_visibility(satellite, location, self.t) and satellite not in satellite_list:
                     satellite_list.append(satellite)
+                else:
+                    pass
+                # bluffton = Topos(location[0], location[1])
+                # difference = satellite - bluffton
+                # topocentric = difference.at(self.t)
+                #
+                # alt, az, distance = topocentric.altaz()
+                #
+                # if alt.degrees > 0 and satellite not in satellite_list:
+                #     satellite_list.append(satellite)
         self.t = 0
         timestring = start_time.strftime("%H") + ":" + start_time.strftime("%M")
         return (timestring, len(satellite_list), satellite_list)
+
+    def satellite_visibility(self, satellite, location, time):
+        """ calculates whether the satellite is visible from a given location and at a specified time"""
+        bluffton = Topos(location[0], location[1])
+        difference = satellite - bluffton
+        topocentric = difference.at(time)
+        alt, az, distance = topocentric.altaz()
+
+        if alt.degrees > 0:
+            return True
+        else:
+            return False
