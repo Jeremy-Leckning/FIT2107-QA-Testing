@@ -25,7 +25,6 @@ start_time=datetime.now(), n_windows=3, duration=60, sample_interval=1, cumulati
         self.assertTrue(realScheduler.max.call_count == 3)
 
     def test_findTime_cumulative_true(self):
-        print("hello1")
         """Tests functionality of find_time when cumulative = True, using mocking"""
         realScheduler = Scheduler()
         realScheduler.total = MagicMock()
