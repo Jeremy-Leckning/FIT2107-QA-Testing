@@ -1,3 +1,4 @@
 {
+  "schedulerTest.py::SchedulerTest": true,
   "schedulerTest.py::SchedulerTest::test_itsalive": true
 }

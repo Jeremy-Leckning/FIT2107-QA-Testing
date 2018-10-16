@@ -5,20 +5,15 @@ Initial skeleton code written by Robert Merkel for FIT2107 Assignment 3
 from skyfield.api import Loader
 from skyfield.api import Topos, load
 
-#import pytz,datetime, time
 from datetime import datetime, timedelta
 from pytz import timezone
-# import pytz,datetime, time
 
 
 
 class IllegalArgumentException(Exception):
     '''An exception to throw if somebody provides invalid data to the Scheduler methods'''
     def __init__(self):
-        pass
-
-    def __str__(self):
-        print("There is an error with the arguments")
+        Exception.__init__(self, "There is an error with the arguments")
 
 
 class Scheduler:
