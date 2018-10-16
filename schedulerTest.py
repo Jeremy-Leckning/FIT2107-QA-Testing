@@ -81,13 +81,19 @@ start_time=datetime.now(), n_windows=3, duration=60, sample_interval=1, cumulati
         with self.assertRaises(IllegalArgumentException):
             (stime, satellites) = self.scheduler.find_time(start_time="now")
         with self.assertRaises(IllegalArgumentException):
+            (stime, satellites) = self.scheduler.find_time(duration=-5)
+        with self.assertRaises(IllegalArgumentException):
             (stime, satellites) = self.scheduler.find_time(n_windows=-5)
         with self.assertRaises(IllegalArgumentException):
             (stime, satellites) = self.scheduler.find_time(n_windows="a")
         with self.assertRaises(IllegalArgumentException):
             (stime, satellites) = self.scheduler.find_time(duration=15, sample_interval=20)
         with self.assertRaises(IllegalArgumentException):
-            (stime, satellites) = self.scheduler.find_time(location=(-100,200))
+            (stime, satellites) = self.scheduler.find_time(location=(-100,100))
+        with self.assertRaises(IllegalArgumentException):
+            (stime, satellites) = self.scheduler.find_time(location= [10, 10])
+        with self.assertRaises(IllegalArgumentException):
+            (stime, satellites) = self.scheduler.find_time(location=(10,200))
         with self.assertRaises(IllegalArgumentException):
             (stime, satellites) = self.scheduler.find_time(cumulative="hello")
 
