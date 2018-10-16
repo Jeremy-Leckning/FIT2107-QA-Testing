@@ -117,8 +117,6 @@ class Scheduler:
             # string = max_time_value.strftime("%H") + ":" + max_time_value.strftime("%M")
             return (max_time_value, max_satellite_list)  # return (string, max_value, max_satellite_list)
 
-        self.t = 0
-
     def max(self, satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
     start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021)):
         """
