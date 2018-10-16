@@ -24,13 +24,14 @@ class SchedulerTest(unittest.TestCase):
         self.assertTrue(current_max_list == ["sat1", "sat3"])
 
     def test_total(self):
+
         realScheduler = Scheduler()
         realScheduler.load_satellites = MagicMock(return_value={0: "sat1", 1: "sat2", 2: "sat3", 3:"sat4", 4:"sat5"})
         # realScheduler.load_satellites.return_value =
         realScheduler.satellite_visibility = MagicMock()
         realScheduler.satellite_visibility.side_effect = 60 * [True, False, True, True, False]
         # realScheduler.satellite_visibility.return_value = True
-        (timestring, max_count, current_max_list) = realScheduler.max()
+        (timestring, max_count, current_max_list) = realScheduler.total()
         self.assertTrue(max_count == 3)
         self.assertTrue(current_max_list == ["sat1", "sat3", "sat4"])
 
