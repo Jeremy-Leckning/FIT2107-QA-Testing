@@ -34,6 +34,7 @@ class Scheduler:
         satellites = load.tle(satlist_url)
         return satellites
 
+
     def find_time(self, satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
     start_time=datetime.now(), n_windows=24, duration=60, sample_interval=1, cumulative=False,
     location=(-37.910496,145.134021)):
@@ -116,6 +117,19 @@ class Scheduler:
             max_satellite_list = satellite_list[max_index]
             # string = max_time_value.strftime("%H") + ":" + max_time_value.strftime("%M")
             return (max_time_value, max_satellite_list)  # return (string, max_value, max_satellite_list)
+
+
+    def satellite_visibility(self, satellite, location, time):
+        """ calculates whether the satellite is visible from a given location and at a specified time"""
+        bluffton = Topos(location[0], location[1])
+        difference = satellite - bluffton
+        topocentric = difference.at(time)
+        alt, az, distance = topocentric.altaz()
+        if alt.degrees > 0:
+            return True
+        else:
+            return False
+
     def max(self, satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
     start_time=datetime.now(), duration=60, sample_interval=1, location=(-37.910496,145.134021)):
         """
@@ -134,7 +148,6 @@ class Scheduler:
         UTC_ZONE = timezone('UTC')
         current_max_list = []
         max_count = 0
-
         for j in range(0, duration, sample_interval):
             # Resetting local variables after each iteration
             satellite_list = []
@@ -151,6 +164,7 @@ class Scheduler:
 
                 # Determining whether satellite is visible or not
                 satellite = satellites[i]
+
                 if self.satellite_visibility(satellite, location, self.t):
                     satellite_list.append(satellite)
                     count += 1
@@ -226,14 +240,4 @@ class Scheduler:
         timestring = start_time.strftime("%H") + ":" + start_time.strftime("%M")
         return (timestring, len(satellite_list), satellite_list)
 
-    def satellite_visibility(self, satellite, location, time):
-        """ calculates whether the satellite is visible from a given location and at a specified time"""
-        bluffton = Topos(location[0], location[1])
-        difference = satellite - bluffton
-        topocentric = difference.at(time)
-        alt, az, distance = topocentric.altaz()
 
-        if alt.degrees > 0:
-            return True
-        else:
-            return False

@@ -14,13 +14,25 @@ class SchedulerTest(unittest.TestCase):
     def test_max(self):
         """Tests functionality of max() function using mocking"""
         realScheduler = Scheduler()
-        realScheduler.load_satellites= MagicMock
-        realScheduler.load_satellites.return_value = ["sat3", "sat4", "sat5"]
-        realScheduler.satellite_visibility = MagicMock
-        realScheduler.satellite_visibility.return_value = True
+        realScheduler.load_satellites= MagicMock(return_value={0: "sat1", 1:"sat2", 2:"sat3"})
+        # realScheduler.load_satellites.return_value =
+        realScheduler.satellite_visibility = MagicMock()
+        realScheduler.satellite_visibility.side_effect = 60*[True, False, True]
+        # realScheduler.satellite_visibility.return_value = True
+        (timestring, max_count, current_max_list) = realScheduler.max()
+        self.assertTrue(max_count == 2)
+        self.assertTrue(current_max_list == ["sat1", "sat3"])
+
+    def test_total(self):
+        realScheduler = Scheduler()
+        realScheduler.load_satellites = MagicMock(return_value={0: "sat1", 1: "sat2", 2: "sat3", 3:"sat4", 4:"sat5"})
+        # realScheduler.load_satellites.return_value =
+        realScheduler.satellite_visibility = MagicMock()
+        realScheduler.satellite_visibility.side_effect = 60 * [True, False, True, True, False]
+        # realScheduler.satellite_visibility.return_value = True
         (timestring, max_count, current_max_list) = realScheduler.max()
         self.assertTrue(max_count == 3)
-        self.assertTrue(current_max_list == ["sat3", "sat4", "sat5"])
+        self.assertTrue(current_max_list == ["sat1", "sat3", "sat4"])
 
     def test_findTime_cumulative_false(self):
         """Tests functionality of find_time when cumulative = False, using mocking"""
@@ -72,17 +84,19 @@ start_time=datetime.now(), n_windows=3, duration=60, sample_interval=1, cumulati
     #     self.assertTrue(type(maxCount) == int)
     #     self.assertTrue(len(satList) == maxCount)
     #     self.assertTrue(time == start_time.strftime("%H") + ":" + start_time.strftime("%M"))
+    #
+    # def test_total(self):
+    #     """ tests total function"""
+    #     start_time = datetime.now()
+    #     (time, maxCount, satList) = self.scheduler.total(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
+    #     start_time=start_time, duration=60, sample_interval=1, location=(-37.910496,145.134021))
+    #
+    #     self.assertTrue(type(time) == str)
+    #     self.assertTrue(type(maxCount) == int)
+    #     self.assertTrue(len(satList) == maxCount)
+    #     self.assertTrue(time == start_time.strftime("%H") + ":" + start_time.strftime("%M"))
 
-    def test_total(self):
-        """ tests total function"""
-        start_time = datetime.now()
-        (time, maxCount, satList) = self.scheduler.total(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-        start_time=start_time, duration=60, sample_interval=1, location=(-37.910496,145.134021))
 
-        self.assertTrue(type(time) == str)
-        self.assertTrue(type(maxCount) == int)
-        self.assertTrue(len(satList) == maxCount)
-        self.assertTrue(time == start_time.strftime("%H") + ":" + start_time.strftime("%M"))
 
     def test_exceptionthrown(self):
         """
