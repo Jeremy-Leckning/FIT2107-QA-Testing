@@ -4,7 +4,6 @@ from scheduler import IllegalArgumentException
 from datetime import datetime
 from unittest.mock import patch, MagicMock, create_autospec
 
-
 class SchedulerTest(unittest.TestCase):
     """Tests for the scheduler class.  Add more tests
     to test the code that you write"""
@@ -15,23 +14,26 @@ class SchedulerTest(unittest.TestCase):
         """Tests functionality of max() function using mocking"""
         realScheduler = Scheduler()
         realScheduler.load_satellites= MagicMock(return_value={0: "sat1", 1:"sat2", 2:"sat3"})
-        # realScheduler.load_satellites.return_value =
         realScheduler.satellite_visibility = MagicMock()
         realScheduler.satellite_visibility.side_effect = 60*[True, False, True]
-        # realScheduler.satellite_visibility.return_value = True
         (timestring, max_count, current_max_list) = realScheduler.max()
+        self.assertTrue(type(max_count) == int)
+        self.assertTrue(type(timestring) == str)
+        self.assertTrue(len(current_max_list) == max_count)
         self.assertTrue(max_count == 2)
         self.assertTrue(current_max_list == ["sat1", "sat3"])
 
-    def test_total(self):
 
+    def test_total(self):
+        """Tests functionality of total() function using mocking"""
         realScheduler = Scheduler()
         realScheduler.load_satellites = MagicMock(return_value={0: "sat1", 1: "sat2", 2: "sat3", 3:"sat4", 4:"sat5"})
-        # realScheduler.load_satellites.return_value =
         realScheduler.satellite_visibility = MagicMock()
         realScheduler.satellite_visibility.side_effect = 60 * [True, False, True, True, False]
-        # realScheduler.satellite_visibility.return_value = True
         (timestring, max_count, current_max_list) = realScheduler.total()
+        self.assertTrue(type(max_count) == int)
+        self.assertTrue(type(timestring) == str)
+        self.assertTrue(len(current_max_list) == max_count)
         self.assertTrue(max_count == 3)
         self.assertTrue(current_max_list == ["sat1", "sat3", "sat4"])
 
@@ -74,30 +76,6 @@ start_time=datetime.now(), n_windows=3, duration=60, sample_interval=1, cumulati
         self.assertTrue(satellites == ["sat1", "sat2", "sat3", "sat4"])
         schedulerMock.load_satellites.assert_called_once()  # assert that is has been called only once
         schedulerMock.load_satellites.assert_called_with()  # called with no arguments
-
-    # def test_max(self):
-    #     """ tests max function """
-    #     start_time = datetime.now()
-    #     (time, maxCount, satList) = self.scheduler.max(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-    #     start_time=start_time, duration=60, sample_interval=1, location=(-37.910496,145.134021))
-    #
-    #     self.assertTrue(type(time) == str)
-    #     self.assertTrue(type(maxCount) == int)
-    #     self.assertTrue(len(satList) == maxCount)
-    #     self.assertTrue(time == start_time.strftime("%H") + ":" + start_time.strftime("%M"))
-    #
-    # def test_total(self):
-    #     """ tests total function"""
-    #     start_time = datetime.now()
-    #     (time, maxCount, satList) = self.scheduler.total(satlist_url='http://celestrak.com/NORAD/elements/visual.txt',
-    #     start_time=start_time, duration=60, sample_interval=1, location=(-37.910496,145.134021))
-    #
-    #     self.assertTrue(type(time) == str)
-    #     self.assertTrue(type(maxCount) == int)
-    #     self.assertTrue(len(satList) == maxCount)
-    #     self.assertTrue(time == start_time.strftime("%H") + ":" + start_time.strftime("%M"))
-
-
 
     def test_exceptionthrown(self):
         """

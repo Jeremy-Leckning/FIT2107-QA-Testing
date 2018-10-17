@@ -4,11 +4,8 @@ Initial skeleton code written by Robert Merkel for FIT2107 Assignment 3
 
 from skyfield.api import Loader
 from skyfield.api import Topos, load
-
 from datetime import datetime, timedelta
 from pytz import timezone
-
-
 
 class IllegalArgumentException(Exception):
     '''An exception to throw if somebody provides invalid data to the Scheduler methods'''
@@ -87,7 +84,6 @@ class Scheduler:
         count_list = []
 
         if cumulative == False:  # return(time_interval, list of satellites visible during window of time)
-
             for window in range(n_windows):
                 self.t = start_time + timedelta(minutes=duration*window)
                 #time_list.append(self.t)
@@ -99,8 +95,7 @@ class Scheduler:
             max_index = count_list.index(max_value)
             max_time_value = time_list[max_index]
             max_satellite_list = satellite_list[max_index]
-            #string = max_time_value.strftime("%H") + ":" + max_time_value.strftime("%M")
-            return (max_time_value, max_satellite_list) #  return (string, max_value, max_satellite_list)
+            return (max_time_value, max_satellite_list)
 
         elif cumulative == True:
             for window in range(n_windows):
@@ -115,8 +110,7 @@ class Scheduler:
             max_index = count_list.index(max_value)
             max_time_value = time_list[max_index]
             max_satellite_list = satellite_list[max_index]
-            # string = max_time_value.strftime("%H") + ":" + max_time_value.strftime("%M")
-            return (max_time_value, max_satellite_list)  # return (string, max_value, max_satellite_list)
+            return (max_time_value, max_satellite_list)
 
 
     def satellite_visibility(self, satellite, location, time):
@@ -161,30 +155,18 @@ class Scheduler:
             for i in satellites:
                 if isinstance(i, str):
                     continue
-
                 # Determining whether satellite is visible or not
                 satellite = satellites[i]
-
                 if self.satellite_visibility(satellite, location, self.t):
                     satellite_list.append(satellite)
                     count += 1
                 else:
                     pass
-                # bluffton = Topos(location[0], location[1])
-                # difference = satellite - bluffton
-                # topocentric = difference.at(self.t)
-                # alt, az, distance = topocentric.altaz()
-                #
-                # if alt.degrees > 0:
-                #     satellite_list.append(satellite)
-                #     count += 1
-
             # keeping record of max number of satellites visible at any time within interval
             if count > max_count:
                 current_max_list = satellite_list
                 max_count = count
                 peak_time = start_time + timedelta(minutes = j)
-
             timestring = start_time.strftime("%H") + ":" + start_time.strftime("%M")
         return (timestring, max_count, current_max_list)
 
@@ -200,42 +182,28 @@ class Scheduler:
         @location: the user's location
         @return: a tuple (start_time, number of distinct satellites, list of distinct satellites)
         """
-
         # Loading list of satellites
         satellites = self.load_satellites(satlist_url)
-
         # Local variables used inside loop
         satellite_list = []
         UTC_ZONE = timezone('UTC')
 
         for j in range(0, duration, sample_interval):
             # Resetting local variables
-
             # Getting time we want to calculate
             self.t = start_time + timedelta(minutes=j)
             e = UTC_ZONE.localize(self.t)
             self.t = self.ts.utc(e)
-
             # Looping through satellites list
             for i in satellites:
                 if isinstance(i, str):
                     continue
-
                 # Determining whether satellite is visible or not
                 satellite = satellites[i]
-
                 if self.satellite_visibility(satellite, location, self.t) and satellite not in satellite_list:
                     satellite_list.append(satellite)
                 else:
                     pass
-                # bluffton = Topos(location[0], location[1])
-                # difference = satellite - bluffton
-                # topocentric = difference.at(self.t)
-                #
-                # alt, az, distance = topocentric.altaz()
-                #
-                # if alt.degrees > 0 and satellite not in satellite_list:
-                #     satellite_list.append(satellite)
         self.t = 0
         timestring = start_time.strftime("%H") + ":" + start_time.strftime("%M")
         return (timestring, len(satellite_list), satellite_list)
