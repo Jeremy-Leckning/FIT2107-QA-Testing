@@ -39,6 +39,9 @@ The strategy is to mock out all of the functionality relying on the Skyfield API
 ###### Coverage
 Python has a **Coverage tool** which after running and analyzing the Python program, it can show the amount of **branch** and **statement** coverage achieved by the code. Besides that, it can also inform the user about which sections of the code that are not being ran. This information is useful since it can be used to generate new test cases specifically designed to cover the lines of code which were omitted in testing, which in turn will increase the coverage and result in a more complete testing.
 
+An example of a result from running coverage is shown below:
+
+![Image of Yaktocat](https://i.imgur.com/uWFt13F.png)
 ### Continuous Integration
 After creating the unit test module containing unit testing for the main methods, instead of running the test locally, gitlab’s CI can be used. A **.gitlab-ci.yml** file is used to set up the continuous integration. Libraries imported should be installed in the file using pip. After setting everything up, everytime the module is pushed onto git, the test file will run and a feedback will be provided in the console to report whether the test has succeeded or failed. 
 
@@ -46,5 +49,102 @@ After creating the unit test module containing unit testing for the main methods
 Since this project is a pairwork, both are expected to play the role of developer and tester by coding up the actual functionality of the program as well as writing up test cases that complements the main code.
 
 ### Test Strategy to Test Cases
+Equivalence Partitioning is first used to separate all of the valid and invalid inputs for find_time(). All the invalid inputs are tested using test_exceptionthrown() to see how errors are being handled.
+```python
+    def test_exceptionthrown(self):
+        """
+        tests whether IllegalArguentExceptions are thrown when an illegal argument is used in the find_time function
+        """
+        with self.assertRaises(IllegalArgumentException):
+            (stime, satellites) = self.scheduler.find_time(start_time="now")
+        with self.assertRaises(IllegalArgumentException):
+            (stime, satellites) = self.scheduler.find_time(duration=-5)
+        with self.assertRaises(IllegalArgumentException):
+            (stime, satellites) = self.scheduler.find_time(n_windows=-5)
+        with self.assertRaises(IllegalArgumentException):
+            (stime, satellites) = self.scheduler.find_time(n_windows="a")
+        with self.assertRaises(IllegalArgumentException):
+            (stime, satellites) = self.scheduler.find_time(duration=15, sample_interval=20)
+        with self.assertRaises(IllegalArgumentException):
+            (stime, satellites) = self.scheduler.find_time(location=(-100,100))
+        with self.assertRaises(IllegalArgumentException):
+            (stime, satellites) = self.scheduler.find_time(location= [10, 10])
+        with self.assertRaises(IllegalArgumentException):
+            (stime, satellites) = self.scheduler.find_time(location=(10,200))
+        with self.assertRaises(IllegalArgumentException):
+            (stime, satellites) = self.scheduler.find_time(cumulative="hello")
+```
+All the valid inputs relies on the Skyfield API, so Mocking is done to mock some fake data. Autospec is used in test_load_satellites to ensure that it has the same attributes and methods as the original object. 
+```python
+    def test_load_satellites(self):
+        """
+        tests load satellites using Mocking
+        """
+        schedulerMock = create_autospec(self.scheduler)
+```
+Code that relies on the API are placed inside a function so that their return values can be set for max() and total()
+```python
+    def load_satellites(self, satlist_url='http://celestrak.com/NORAD/elements/visual.txt'):
+        """
+        loads the list of satellites from a given url into an array
+        @return: list of satellite
+        """
+        satellites = load.tle(satlist_url)
+        return satellites
+```
+```python
+    def satellite_visibility(self, satellite, location, time):
+        """ calculates whether the satellite is visible from a given location and at a specified time"""
+        bluffton = Topos(location[0], location[1])
+        difference = satellite - bluffton
+        topocentric = difference.at(time)
+        alt, az, distance = topocentric.altaz()
+        if alt.degrees > 0:
+            return True
+        else:
+            return False
+```
+```python
+    def test_max(self):
+        """Tests functionality of max() function using mocking"""
+        realScheduler = Scheduler()
+        realScheduler.load_satellites= MagicMock(return_value={0: "sat1", 1:"sat2", 2:"sat3"})
+        # realScheduler.load_satellites.return_value =
+        realScheduler.satellite_visibility = MagicMock()
+```
+```python
+    def test_max(self):
+        """Tests functionality of max() function using mocking"""
+        realScheduler = Scheduler()
+        realScheduler.load_satellites= MagicMock(return_value={0: "sat1", 1:"sat2", 2:"sat3"})
+        realScheduler.satellite_visibility = MagicMock()
+```
+```python
+    def test_total(self):
+        """Tests functionality of total() function using mocking"""
+        realScheduler = Scheduler()
+        realScheduler.load_satellites = MagicMock(return_value={0: "sat1", 1: "sat2", 2: "sat3", 3:"sat4", 4:"sat5"})
+        realScheduler.satellite_visibility = MagicMock()
+```
+There are 2 functions to test find_time, one for Cumulative = True and another for Cumulative = False. This time, the max() and total() methods are mocked. To change the return values of the mocked object, the side_effect function is used. 
+```python
+    def test_findTime_cumulative_false(self):
+        """Tests functionality of find_time when cumulative = False, using mocking"""
+        realScheduler = Scheduler()
+        realScheduler.max = MagicMock()
+        realScheduler.max.side_effect = [("00:00", 4, ["sat1", "sat2", "sat3", "sat4"]),("00:00", 2, ["sat1", "sat2"]),
+                                         ("01:00", 5, ["sat1", "sat2", "sat3", "sat4", "sat5"])]
+```
+```python
+    def test_findTime_cumulative_true(self):
+        """Tests functionality of find_time when cumulative = True, using mocking"""
+        realScheduler = Scheduler()
+        realScheduler.total = MagicMock()
+        realScheduler.total.side_effect = [("00:00", 4, ["sat1", "sat6", "sat3", "sat4"]), ("01:00", 2, ["sat1", "sat7"]),
+                                           ("02:00", 8, ["sat8", "sat9", "sat10", "sat4", "sat5, sat11, sat2, sat3"]),
+                                           ("03:00", 5, ["sat1", "sat2", "sat3", "sat4", "sat5"])]
+```
+
+
 
 
