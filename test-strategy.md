@@ -109,15 +109,8 @@ Code that relies on the API are placed inside a function so that their return va
         """Tests functionality of max() function using mocking"""
         realScheduler = Scheduler()
         realScheduler.load_satellites= MagicMock(return_value={0: "sat1", 1:"sat2", 2:"sat3"})
-        # realScheduler.load_satellites.return_value =
         realScheduler.satellite_visibility = MagicMock()
-```
-```python
-    def test_max(self):
-        """Tests functionality of max() function using mocking"""
-        realScheduler = Scheduler()
-        realScheduler.load_satellites= MagicMock(return_value={0: "sat1", 1:"sat2", 2:"sat3"})
-        realScheduler.satellite_visibility = MagicMock()
+        realScheduler.satellite_visibility.side_effect = 60*[True, False, True]
 ```
 ```python
     def test_total(self):
@@ -125,6 +118,7 @@ Code that relies on the API are placed inside a function so that their return va
         realScheduler = Scheduler()
         realScheduler.load_satellites = MagicMock(return_value={0: "sat1", 1: "sat2", 2: "sat3", 3:"sat4", 4:"sat5"})
         realScheduler.satellite_visibility = MagicMock()
+        realScheduler.satellite_visibility.side_effect = 60 * [True, False, True, True, False]
 ```
 There are 2 functions to test find_time, one for Cumulative = True and another for Cumulative = False. This time, the max() and total() methods are mocked. To change the return values of the mocked object, the side_effect function is used. 
 ```python
