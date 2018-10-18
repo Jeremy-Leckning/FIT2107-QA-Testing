@@ -26,6 +26,7 @@ class Scheduler:
     def load_satellites(self, satlist_url='http://celestrak.com/NORAD/elements/visual.txt'):
         """
         loads the list of satellites from a given url into an array
+        @param satlist_url: the url we want to load satellites from
         @return: list of satellite
         """
         satellites = load.tle(satlist_url)
@@ -83,13 +84,13 @@ class Scheduler:
         time_list = []
         count_list = []
 
-        if cumulative == False:  # return(time_interval, list of satellites visible during window of time)
+        if cumulative == False:  # return(start_time, list of satellites visible during window of time)
             for window in range(n_windows):
                 self.t = start_time + timedelta(minutes=duration*window)
                 #time_list.append(self.t)
                 temp = self.max(satlist_url, self.t, duration, sample_interval, location)
                 time_list.append(temp[0])
-                count_list.append(temp[1])  # adding count only
+                count_list.append(temp[1])
                 satellite_list.append(temp[2])
             max_value = max(count_list)
             max_index = count_list.index(max_value)
@@ -103,7 +104,7 @@ class Scheduler:
                 # time_list.append(self.t)
                 temp = self.total(satlist_url, self.t, duration, sample_interval, location)
                 time_list.append(temp[0])
-                count_list.append(temp[1])  # adding count only
+                count_list.append(temp[1])
                 satellite_list.append(temp[2]) # satellite_list holds arrays of satellites for each windows. Hence
                 # satellite_list[0] returns the list of satellites for the first viewing window
             max_value = max(count_list)
@@ -114,7 +115,13 @@ class Scheduler:
 
 
     def satellite_visibility(self, satellite, location, time):
-        """ calculates whether the satellite is visible from a given location and at a specified time"""
+        """
+        calculates whether the satellite is visible from a given location and at a specified time
+        @param satellite: the satellite we want to know whether it is visible or not
+        @param location: the location from which we want to know if the satellite is visible
+        @param time: the time at which we want to know if the satellite is visible
+        @return: True if satellite is visible, False otherwise
+        """
         bluffton = Topos(location[0], location[1])
         difference = satellite - bluffton
         topocentric = difference.at(time)
@@ -131,9 +138,9 @@ class Scheduler:
         @param satlist_url: the website where we get the list of satellites
         @param start_time: the time where we want to start measure the number of satellites visible
         @param duration: the duration during which we want to measure the number of satellites visible
-        @sample_interval: the intervals of time during which we will measure the number of visible satellites
-        @location: the user's location
-        @return: a tuple (time interval, max_number_of_satellites, list of satellites)
+        @param sample_interval: the intervals of time during which we will measure the number of visible satellites
+        @param location: the user's location
+        @return: a tuple (start_time, max_number_of_satellites, list of satellites)
         """
 
         # Loading list of satellites
@@ -178,8 +185,8 @@ class Scheduler:
         @param satlist_url: the website where we get the list of satellites
         @param start_time: the time where we want to start measure the number of satellites visible
         @param duration: the duration during which we want to measure the number of satellites visible
-        @sample_interval: the intervals of time during which we will measure the number of visible satellites
-        @location: the user's location
+        @param sample_interval: the intervals of time during which we will measure the number of visible satellites
+        @param location: the user's location
         @return: a tuple (start_time, number of distinct satellites, list of distinct satellites)
         """
         # Loading list of satellites
